@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quizz — Multiplayer Trivia</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ── Home ────────────────────────────────────────────────────────────── -->
+  <div id="s-home" class="screen active">
+    <div class="card">
+      <h1>🎯 Quizz</h1>
+      <p class="subtitle">Multiplayer Trivia</p>
+
+      <div class="field">
+        <label for="inp-name">Your nickname</label>
+        <input id="inp-name" type="text" placeholder="Enter your name…" maxlength="20" autocomplete="off">
+      </div>
+
+      <button id="btn-create" class="btn btn-primary">Create Room</button>
+
+      <div class="divider">or join an existing room</div>
+
+      <div class="row-join">
+        <input id="inp-code" type="text" placeholder="Room code" maxlength="6" autocomplete="off">
+        <button id="btn-join" class="btn btn-secondary">Join</button>
+      </div>
+
+      <p id="home-error" class="error hidden"></p>
+    </div>
+  </div>
+
+  <!-- ── Lobby ────────────────────────────────────────────────────────────── -->
+  <div id="s-lobby" class="screen">
+    <div class="card">
+      <h2>Lobby</h2>
+      <div class="code-box">
+        <p class="label-sm">ROOM CODE</p>
+        <p id="lob-code" class="big-code"></p>
+        <p class="label-sm code-hint">Share this with friends!</p>
+      </div>
+
+      <p class="label-sm" style="margin-bottom:8px">PLAYERS</p>
+      <div id="lob-players" class="player-list"></div>
+
+      <button id="btn-start" class="btn btn-primary hidden">▶ Start Game</button>
+      <p id="lob-wait" class="muted">Waiting for the host to start…</p>
+    </div>
+  </div>
+
+  <!-- ── Game ─────────────────────────────────────────────────────────────── -->
+  <div id="s-game" class="screen">
+    <div class="hud">
+      <span id="hud-counter" class="hud-counter">Q 1/10</span>
+      <div class="timer-wrap">
+        <div class="timer-track"><div id="timer-fill" class="timer-fill"></div></div>
+        <span id="timer-num" class="timer-num">20</span>
+      </div>
+      <span id="hud-answers" class="hud-answers">0/0</span>
+    </div>
+
+    <div class="card q-card">
+      <span id="q-badge" class="badge"></span>
+      <p id="q-text" class="q-text"></p>
+
+      <!-- Multiple choice -->
+      <div id="q-options" class="options hidden">
+        <button class="opt" data-i="0"><span class="opt-lbl">A</span><span class="opt-txt"></span></button>
+        <button class="opt" data-i="1"><span class="opt-lbl">B</span><span class="opt-txt"></span></button>
+        <button class="opt" data-i="2"><span class="opt-lbl">C</span><span class="opt-txt"></span></button>
+        <button class="opt" data-i="3"><span class="opt-lbl">D</span><span class="opt-txt"></span></button>
+      </div>
+
+      <!-- Open answer -->
+      <div id="q-open" class="open-wrap hidden">
+        <input id="inp-answer" type="text" placeholder="Type your answer…" maxlength="80" autocomplete="off">
+        <button id="btn-answer" class="btn btn-primary">Submit</button>
+      </div>
+
+      <!-- Waiting after submit -->
+      <div id="q-waiting" class="q-waiting hidden">
+        <div class="check-icon" id="q-check">✓</div>
+        <p id="q-wait-msg">Answer submitted!<br><span class="muted">Waiting for others…</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Per-question Results ──────────────────────────────────────────────── -->
+  <div id="s-results" class="screen">
+    <div class="card">
+      <h2>Round Results</h2>
+      <div class="correct-box">
+        <p class="label-sm">CORRECT ANSWER</p>
+        <p id="res-answer" class="res-answer-text"></p>
+      </div>
+      <div id="res-list" class="res-list"></div>
+      <p class="muted">Next question in <span id="res-countdown" class="countdown-num">6</span>s…</p>
+    </div>
+  </div>
+
+  <!-- ── Game Over ──────────────────────────────────────────────────────────── -->
+  <div id="s-over" class="screen">
+    <div class="card">
+      <h2>🏆 Final Scores</h2>
+      <div id="over-scores" class="over-scores"></div>
+      <button id="btn-home" class="btn btn-primary">Back to Home</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
